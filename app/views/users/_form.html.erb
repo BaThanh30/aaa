@@ -1,32 +1,74 @@
 <%= form_with(model: user, local: true) do |form| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <% if user.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+            <ul>
+                <% user.errors.full_messages.each do |message| %>
+                    <li>
+                        <%= message %>
+                    </li>
+                    <% end %>
+            </ul>
+        </div>
+        <% end %>
+            <div class="field">
+                <%= form.label :name %>
+                    <%= form.text_field :name, id: :user_name %>
+            </div>
+            <div class="field">
+                <%= form.label :email %>
+                    <%= form.text_field :email, id: :user_email %>
+            </div>
+            <div class="field">
+                <%= form.label :login %>
+                    <%= form.text_field :login, id: :user_login %>
+            </div>
+            <div class="actions">
+                <%= form.submit %>
+            </div>
+            <script type="text/javascript">
+            Ext.onReady(function() {
+                var movie_form = new Ext.FormPanel({
+                    url: 'movie-form-submit.php',
+                    renderTo: document.body,
+                    frame: true,
+                    title: 'Movie Information Form',
+                    width: 250,
+                    items: [{
 
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :user_name %>
-  </div>
+                        xtype: 'textfield',
+                        fieldLabel: 'Name',
+                        name: 'title',
+                        id:'name',
+                        allowBlank: false
+                    },{
+                        xtype: 'textfield',
+                        fieldLabel: 'Email',
+                        name: 'title',
+                        id:'email',
+                        allowBlank: false
+                    }, {
+                        xtype: 'textfield',
+                        fieldLabel: 'Login',
+                        name: 'director',
+                        id:'login',
+                        allowBlank:false
+                    }, {
+                        xtype: 'tbbutton',
+                        text: 'Create user',
+                        listeners:{
+                          click:function(){
+                            var a = Ext.getCmp("name").getValue();
+                            var b = Ext.getCmp("email").getValue();
+                            var c = Ext.getCmp("login").getValue();
+                           alert (a+" \n"+ b +" \n" + c +" ");
+                         }
+                        },
 
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email, id: :user_email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :login %>
-    <%= form.text_field :login, id: :user_login %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+                        
+                    }]
+                });
+            });
+            </script>
+            <% end %>
