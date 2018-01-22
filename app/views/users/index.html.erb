@@ -2,7 +2,7 @@
     <%= notice %>
 </p>
 <h1>Users</h1>
-<table>
+<!--<table>
     <thead>
         <tr>
             <th>Name</th>
@@ -35,6 +35,43 @@
             </tr>
             <% end %>
     </tbody>
-</table>
+</table>-->
+<script>
+Ext.onReady(function() {
+
+
+    var user = new Ext.data.JsonStore({
+        url: 'users.json',
+        fields: [
+            'id',
+            'name',
+            'email',
+            'login'
+        ]
+    });
+
+    user.load();
+
+
+
+    var edit = new Ext.form.TextField();
+
+    var grid = new Ext.grid.EditorGridPanel({
+        renderTo: document.body,
+        frame: true,
+        title: 'User Database',
+        height: 200,
+        width: 400,
+        store: user,
+        columns: [
+            { header: "Id", dataIndex: 'id',editor : edit},
+            { header: "Name", dataIndex: 'name', editor : edit },
+            { header: "Email", dataIndex: 'email',editor : edit },
+            { header: "Login", dataIndex: 'login',editor : edit }
+
+        ]
+    });
+});
+</script>
 <br>
 <%= link_to 'New User', new_user_path %>

@@ -1,10 +1,15 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
+    respond_to do |format|
+      format.html { render  :index }
+      format.json { render json: @users }
+    end
   end
 
   # GET /users/1
@@ -30,7 +35,7 @@ class UsersController < ApplicationController
       if @user.save
         # Tell the UserMailer to send a welcome email after save
         #UserMailer.welcome_email(@user).set(wait: 20.seconds).perform_later(@user)
-        ApplicationJob.set(wait: 60.seconds).perform_later(@user)
+        ApplicationJob.set(wait: 30.seconds).perform_later(@user)
         format.html { redirect_to(@user, notice: 'User was successfully created.') }
         format.json { render json: @user, status: :created, location: @user }
       else
@@ -72,6 +77,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :login)
+      params.permit(:name, :email, :login)
     end
 end

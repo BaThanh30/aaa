@@ -1,3 +1,4 @@
+<!--
 <%= form_with(model: user, local: true) do |form| %>
     <% if user.errors.any? %>
         <div id="error_explanation">
@@ -26,49 +27,92 @@
             <div class="actions">
                 <%= form.submit %>
             </div>
-            <script type="text/javascript">
-            Ext.onReady(function() {
-                var movie_form = new Ext.FormPanel({
-                    url: 'movie-form-submit.php',
-                    renderTo: document.body,
-                    frame: true,
-                    title: 'Movie Information Form',
-                    width: 250,
-                    items: [{
+          -->
+<script type="text/javascript">
+Ext.onReady(function() {
+
+    var login_form = new Ext.FormPanel({
+        url: '...',
+        renderTo: document.body,
+        frame: true,
+        title: 'User Form',
+        width: 250,
+        url: 'login_form.submit',
+        items: [{
 
 
-                        xtype: 'textfield',
-                        fieldLabel: 'Name',
-                        name: 'title',
-                        id:'name',
-                        allowBlank: false
-                    },{
-                        xtype: 'textfield',
-                        fieldLabel: 'Email',
-                        name: 'title',
-                        id:'email',
-                        allowBlank: false
-                    }, {
-                        xtype: 'textfield',
-                        fieldLabel: 'Login',
-                        name: 'director',
-                        id:'login',
-                        allowBlank:false
-                    }, {
-                        xtype: 'tbbutton',
-                        text: 'Create user',
-                        listeners:{
-                          click:function(){
-                            var a = Ext.getCmp("name").getValue();
-                            var b = Ext.getCmp("email").getValue();
-                            var c = Ext.getCmp("login").getValue();
-                           alert (a+" \n"+ b +" \n" + c +" ");
-                         }
+            xtype: 'textfield',
+            fieldLabel: 'Name',
+            name: 'name',
+            id: 'name',
+            allowBlank: false
+        }, {
+            xtype: 'textfield',
+            fieldLabel: 'Email',
+            name: 'email',
+            id: 'email',
+            allowBlank: false
+        }, {
+            xtype: 'textfield',
+            fieldLabel: 'Login',
+            name: 'login',
+            id: 'login',
+
+            allowBlank: false
+        }, {
+            xtype: 'tbbutton',
+            text: 'Create user',
+            listeners: {
+                click: function() {
+                    var a = Ext.getCmp("name").getValue();
+                    var b = Ext.getCmp("email").getValue();
+                    var c = Ext.getCmp("login").getValue();
+
+
+                    Ext.Ajax.request({
+                        url: '/users',
+                        method: 'POST',
+                        params: {
+                            name: a,
+                            email: b,
+                            login: c
+
                         },
+                        success: function() {
+                            alert('success');
+                        },
+                        failure: function() {
+                            alert('fail');
+                        }
 
-                        
-                    }]
-                });
-            });
-            </script>
-            <% end %>
+                    });
+
+                }
+            }
+        }, {
+            xtype: 'tbbutton',
+            text: 'Back',
+            handler: function() {
+                    location.href = "/users";
+                }
+          
+        }],
+
+
+    });
+
+
+    sm: new Ext.grid.RowSelectionModel({
+        singleSelect: true,
+        listeners: {
+            rowselect: {
+                fn: function(sm, index, record) {
+                    Ext.Msg.alert('You Selected', record.data.title);
+                }
+            }
+        }
+    })
+
+});
+</script>
+<% end %>
