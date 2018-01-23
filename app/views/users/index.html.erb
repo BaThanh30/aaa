@@ -82,33 +82,32 @@ Ext.onReady(function() {
             { header: "Email", dataIndex: 'email', editor: edit },
             { header: "Login", dataIndex: 'login', editor: edit },
             {
-                    xtype: 'actioncolum',
-                    header: 'Button',
-                    width: 200,
-                    align: 'center',
-                    // items: [{
-                    //     icon: 'eye.png',
-                    //     tooltip: 'Show'
-                    //     //handler: function()
+                xtype: 'actioncolumn',
+                header: 'Button',
+                width: 200,
+                align: 'center',
+                items: [{
+                    icon: 'eye.png',
+                    tooltip: 'Show',
+                    handler: function() {
+                        //your code
+                    }
+                }, {
+                    icon: 'pencil.png',
+                    tooltip: 'Edit',
+                    handler: function() {
+                        //your code
+                    }
+                }, {
+                    icon: 'delete-button.png',
+                    tooltip: 'Destroy',
+                    handler: function() {
+                        //your code
+                    }
 
-
-                    // }
-                    // // , {
-                    // //     icon: 'pencil.png',
-                    // //     tooltip: 'Edit'
-                    // //     //handler: function()
-
-
-                    // // }, {
-                    // //     icon: 'delete-button.png',
-                    // //     tooltip: 'Destroy'
-                    // //     //handler: function()
-
-
-                    // // }
-                    // ]
-                items: []
-        }]
+                }]
+            }
+        ]
     });
 });
 </script>
