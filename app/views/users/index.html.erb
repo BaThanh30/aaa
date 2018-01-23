@@ -2,7 +2,7 @@
     <%= notice %>
 </p>
 <h1>Users</h1>
-<!--<table>
+<table>
     <thead>
         <tr>
             <th>Name</th>
@@ -35,7 +35,9 @@
             </tr>
             <% end %>
     </tbody>
-</table>-->
+</table>
+
+
 <script>
 Ext.onReady(function() {
 
@@ -57,21 +59,59 @@ Ext.onReady(function() {
     var edit = new Ext.form.TextField();
 
     var grid = new Ext.grid.EditorGridPanel({
+        id :'myGrip',
         renderTo: document.body,
         frame: true,
         title: 'User Database',
         height: 200,
-        width: 400,
+        width: 450,
         store: user,
-        columns: [
-            { header: "Id", dataIndex: 'id',editor : edit},
-            { header: "Name", dataIndex: 'name', editor : edit },
-            { header: "Email", dataIndex: 'email',editor : edit },
-            { header: "Login", dataIndex: 'login',editor : edit }
+        buttons: [{
+            xtype: 'tbbutton',
+            text: 'Login',
+            handler: function() {
+                login_form.show() ;
+            }
 
-        ]
+
+
+        }        ],
+        columns: [
+            { header: "Id", dataIndex: 'id', editor: edit },
+            { header: "Name", dataIndex: 'name', editor: edit },
+            { header: "Email", dataIndex: 'email', editor: edit },
+            { header: "Login", dataIndex: 'login', editor: edit },
+            {
+                    xtype: 'actioncolum',
+                    header: 'Button',
+                    width: 200,
+                    align: 'center',
+                    // items: [{
+                    //     icon: 'eye.png',
+                    //     tooltip: 'Show'
+                    //     //handler: function()
+
+
+                    // }
+                    // // , {
+                    // //     icon: 'pencil.png',
+                    // //     tooltip: 'Edit'
+                    // //     //handler: function()
+
+
+                    // // }, {
+                    // //     icon: 'delete-button.png',
+                    // //     tooltip: 'Destroy'
+                    // //     //handler: function()
+
+
+                    // // }
+                    // ]
+                items: []
+        }]
     });
 });
 </script>
+
+<script type="text/javascript" src="/login_form.js" ></script>
 <br>
-<%= link_to 'New User', new_user_path %>
